@@ -88,7 +88,7 @@ Uploads.createUploadCredentials = function() {
  *   Limited to 32 characters (only `-` and `_` special characters allowed; limit does not include username).
  * @param {string} config.url - HTTPS URL of the S3 object provided by [`createUploadCredentials`](#createuploadcredentials)
  * @param {string} [config.name] - The name of the tileset. Limited to 64 characters.
- * @param {boolean} [config.private=true] - A boolean that describes whether the tileset must be used with an access token from your Mapbox account. Default is true.
+ * - A boolean that describes whether the tileset must be used with an access token from your Mapbox account. Default is true.
  * @return {MapiRequest}
  *
  * @example
@@ -117,7 +117,6 @@ Uploads.createUpload = function(config) {
     url: v.required(v.string),
     tileset: v.string,
     name: v.string,
-    private: v.boolean,
     mapId: v.string,
     tilesetName: v.string
   })(config);
@@ -138,10 +137,6 @@ Uploads.createUpload = function(config) {
   // Support old tilesetName option
   if (config.tilesetName) {
     config.name = config.tilesetName;
-  }
-
-  if (config.private !== false) {
-    config.private = true;
   }
 
   return this.client.createRequest({
